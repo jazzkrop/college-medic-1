@@ -19,7 +19,7 @@ const Login = (props) => {
     if (!userSnapshot.exists()) {
       await setDoc(doc(db, 'users', user.uid), {
         id: user.uid,
-        firstName: user.displayName || null,
+        displayName: user.displayName || null,
         avatarUrl: user.photoURL || null
       })
       // TODO

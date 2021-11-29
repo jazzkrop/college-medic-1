@@ -27,7 +27,7 @@ const Auth = () => {
             bg="#6648bf"
             color="#fff"
             height={64}
-            justifyContent="center"
+            justifyContent="left"
           >
             Medics
           </Header>

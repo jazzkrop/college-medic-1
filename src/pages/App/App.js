@@ -2,6 +2,10 @@ import { Switch, Route, Redirect } from 'react-router-dom'
 import { UsersAll, UserCreate, UserProfile, UserProfileEdit } from './Users'
 import { RequiredActionsAll, RequiredActionsCreate } from './RequiredActions'
 import PATHS from '../paths'
+import { LayoutSystemProvider, Layout } from '@qonsoll/react-design'
+import { AccountMenu, LayoutAside, Logo, MainMenu } from 'components'
+import { useAuthState } from 'react-firebase-hooks/auth'
+import { auth } from 'services/firebase'
 
 const {
   USERS_ALL,
@@ -42,18 +46,36 @@ const routes = [
 ]
 
 const App = () => {
+  const [user, loading, error] = useAuthState(auth)
+  console.log('user ->', user)
   return (
     // Layout should be here
-    <>
-      <Switch>
-        {routes.map((routeProps) => (
-          <Route {...routeProps} />
-        ))}
-        <Route>
-          <Redirect to={PATHS.SERVICE.NOT_FOUND} />
-        </Route>
-      </Switch>
-    </>
+    <LayoutSystemProvider isAsideLeft>
+      <Layout
+        asideLeft={
+          <LayoutAside
+            top={<Logo />}
+            center={<MainMenu />}
+            bottom={
+              <AccountMenu
+                avatar={user?.photoURL}
+                displayName={user?.displayName}
+                email={user?.email}
+              />
+            }
+          />
+        }
+      >
+        <Switch>
+          {routes.map((routeProps) => (
+            <Route {...routeProps} />
+          ))}
+          <Route>
+            <Redirect to={PATHS.SERVICE.NOT_FOUND} />
+          </Route>
+        </Switch>
+      </Layout>
+    </LayoutSystemProvider>
   )
 }
 
