@@ -19,7 +19,7 @@ const Navigator = () => {
           </Route>
           <Route path="/auth/:path?" component={Auth} />
           <Route path="/service/:path?" component={Service} />
-          <Route element={App} />
+          <Route component={App} />
         </Switch>
       </RoutesRedirect>
     </Router>
