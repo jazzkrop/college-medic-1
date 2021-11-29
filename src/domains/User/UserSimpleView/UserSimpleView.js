@@ -2,7 +2,7 @@ import { Col, Row } from 'antd'
 import { Link } from 'react-router-dom'
 import { Button } from '@qonsoll/react-design'
 
-const UserSimpleView = ({ id, firstName, lastName, secondName, role}) => {
+const UserSimpleView = ({ id, firstName, lastName, secondName, role }) => {
   const textStyle = {
     marginRight: '4px'
   }
