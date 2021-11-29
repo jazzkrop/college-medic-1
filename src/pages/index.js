@@ -1,7 +1,0 @@
-export { default as Login } from './Login'
-export { default as RequiredActionsAll } from './RequiredActionsAll'
-export { default as RequiredActionsCreate } from './RequiredActionsCreate'
-export { default as StudentsAll } from './StudentsAll'
-export { default as UserCreate } from './UserCreate'
-export { default as UserProfile } from './UserProfile'
-export { default as Error } from './Error'

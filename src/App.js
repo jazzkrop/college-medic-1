@@ -1,23 +1,9 @@
-import {
-  BrowserRouter as Router,
-  Routes as Switch,
-  Route,
-  Link
-} from 'react-router-dom'
-import {
-  StudentsAll,
-  RequiredActionsAll,
-  UserCreate,
-  UserProfile,
-  RequiredActionsCreate,
-  Login,
-  Error
-} from 'pages'
+import Navigator from './pages/Navigator'
 
 function App() {
   return (
     <div>
-      <Router>
+      {/* <Router>
         <div>
           <nav>
             <ul>
@@ -35,9 +21,6 @@ function App() {
               </li>
             </ul>
           </nav>
-
-          {/* A <Switch> looks through its children <Route>s and
-            renders the first one that matches the current URL. */}
           <Switch>
             <Route path="/" element={<Login />} />
             <Route path="/users" element={<StudentsAll />} />
@@ -51,7 +34,8 @@ function App() {
             <Route element={<Error />} />
           </Switch>
         </div>
-      </Router>
+      </Router> */}
+      <Navigator />
     </div>
   )
 }
