@@ -4,11 +4,16 @@ import {
   Route,
   Link
 } from 'react-router-dom'
-import StudentsAll from './pages/StudentsAll'
-import RequiredActionsAll from './pages/RequiredActionsAll'
-import Error from './pages/Error'
-import UserCreate from './pages/UserCreate'
-import RequiredActionsCreate from './pages/RequiredActionsCreate'
+import {
+  StudentsAll,
+  RequiredActionsAll,
+  UserCreate,
+  UserProfile,
+  RequiredActionsCreate,
+  Login,
+  Error
+} from 'pages'
+
 function App() {
   return (
     <div>
@@ -34,14 +39,16 @@ function App() {
           {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
           <Switch>
+            <Route path="/" element={<Login />} />
             <Route path="/users" element={<StudentsAll />} />
             <Route path="/required-actions" element={<RequiredActionsAll />} />
             <Route path="/user/create" element={<UserCreate />} />
+            <Route path="/users/:id" element={<UserProfile />} />
             <Route
               path="/required-action/create"
               element={<RequiredActionsCreate />}
             />
-            <Route path="/" element={<Error />} />
+            <Route element={<Error />} />
           </Switch>
         </div>
       </Router>

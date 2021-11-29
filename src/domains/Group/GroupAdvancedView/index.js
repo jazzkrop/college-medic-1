@@ -1,1 +1,1 @@
-export { default as default } from './GroupAdvancedView'
+export { default } from './GroupAdvancedView'
