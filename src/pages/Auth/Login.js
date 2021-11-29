@@ -2,6 +2,7 @@ import { getAuth, GoogleAuthProvider, signInWithPopup } from '@firebase/auth'
 import { doc, getDoc, getFirestore, setDoc } from '@firebase/firestore'
 import { useHistory } from 'react-router-dom'
 import { app } from 'services/firebase'
+import { PageWrapper, Button } from '@qonsoll/react-design'
 
 const auth = getAuth(app)
 const provider = new GoogleAuthProvider()
@@ -21,18 +22,32 @@ const Login = (props) => {
         firstName: user.displayName || null,
         avatarUrl: user.photoURL || null
       })
+      // TODO
+      // move this flow to the RoutesRedirect
       history.push(`/users/${user.uid}/edit`)
+    } else {
+      history.push(`/users`)
     }
-    history.push(`/users/${user.uid}/edit`)
   }
 
   return (
-    <div>
-      <h1>Login</h1>
-      <div>
-        <button onClick={login}>Login or Sign Up</button>
-      </div>
-    </div>
+    <PageWrapper
+      alignMiddle
+      height="100%"
+      headingProps={{
+        title: 'Welcome 👋',
+        subTitle: 'Please, login into the system',
+        marginBottom: 40
+      }}
+      contentWidth={['100%', '100%', 700]}
+    >
+      <Button type="primary" size="large" block onClick={login}>
+        Login
+        <span style={{ marginLeft: '8px' }} role="img" aria-label="icon">
+          🚀
+        </span>
+      </Button>
+    </PageWrapper>
   )
 }
 export default Login
