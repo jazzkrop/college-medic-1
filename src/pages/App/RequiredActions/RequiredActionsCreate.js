@@ -1,17 +1,10 @@
-import { Col } from 'antd'
-import { Row } from '@qonsoll/react-design'
-import { RequiredActionSimpleForm } from 'domains/RequiredAction'
+import { PageWrapper } from '@qonsoll/react-design'
 
 const RequiredActionsCreate = (props) => {
   return (
-    <div>
-      <Row mb={16} mt={16}>
-        <Col>
-          <h1>Required Action Edit</h1>
-        </Col>
-      </Row>
-      <RequiredActionSimpleForm />
-    </div>
+    <PageWrapper headingProps={{ title: 'Create required action' }}>
+      content
+    </PageWrapper>
   )
 }
 export default RequiredActionsCreate

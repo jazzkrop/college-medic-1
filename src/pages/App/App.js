@@ -1,5 +1,6 @@
 import { Switch, Route, Redirect } from 'react-router-dom'
 import { UsersAll, UserCreate, UserProfile, UserProfileEdit } from './Users'
+import { GroupsAll, GroupCreate, GroupEdit } from './Groups'
 import { RequiredActionsAll, RequiredActionsCreate } from './RequiredActions'
 import PATHS from '../paths'
 import { LayoutSystemProvider, Layout } from '@qonsoll/react-design'
@@ -13,7 +14,10 @@ const {
   USER_PROFILE,
   USER_PROFILE_EDIT,
   REQUIRED_ACTIONS_ALL,
-  REQUIRED_ACTIONS_CREATE
+  REQUIRED_ACTIONS_CREATE,
+  GROUPS_ALL,
+  GROUP_CREATE,
+  GROUP_EDIT
 } = PATHS.AUTHENTICATED
 
 const routes = [
@@ -41,6 +45,24 @@ const routes = [
     key: 'REQUIRED_ACTIONS_CREATE',
     path: REQUIRED_ACTIONS_CREATE,
     component: RequiredActionsCreate,
+    exact: true
+  },
+  {
+    key: 'GROUPS_ALL',
+    path: GROUPS_ALL,
+    component: GroupsAll,
+    exact: true
+  },
+  {
+    key: 'GROUP_CREATE',
+    path: GROUP_CREATE,
+    component: GroupCreate,
+    exact: true
+  },
+  {
+    key: 'GROUP_EDIT',
+    path: GROUP_EDIT,
+    component: GroupEdit,
     exact: true
   }
 ]

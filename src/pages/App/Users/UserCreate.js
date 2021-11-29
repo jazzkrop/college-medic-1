@@ -1,16 +1,11 @@
-import { Row, Col } from 'antd'
+import { PageWrapper } from '@qonsoll/react-design'
 import { UserSimpleForm } from 'domains/User'
 
 const UserCreate = (props) => {
   return (
-    <div>
-      <Row>
-        <Col>
-          <h1>User Profile Edit</h1>
-        </Col>
-      </Row>
+    <PageWrapper headingProps={{ title: 'Create profile' }}>
       <UserSimpleForm />
-    </div>
+    </PageWrapper>
   )
 }
 export default UserCreate
