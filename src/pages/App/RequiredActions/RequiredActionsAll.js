@@ -1,9 +1,10 @@
 import { PageWrapper } from '@qonsoll/react-design'
+import { RequiredActionsList } from 'domains/RequiredAction'
 
 const RequiredActionsAll = (props) => {
   return (
     <PageWrapper headingProps={{ title: 'Required actions' }}>
-      content
+      <RequiredActionsList />
     </PageWrapper>
   )
 }

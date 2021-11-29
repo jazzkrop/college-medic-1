@@ -50,7 +50,6 @@ const GroupSimpleForm = (props) => {
             </Form.Item>
           </Col>
         </Row>
-
         <Row h="right">
           <Col cw="auto">
             <Form.Item>

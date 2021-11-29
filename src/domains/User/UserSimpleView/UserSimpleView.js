@@ -1,29 +1,32 @@
-import { Col, Row } from 'antd'
 import { Link } from 'react-router-dom'
-import { Button } from '@qonsoll/react-design'
+import { Col, Row, Text } from '@qonsoll/react-design'
 
-const UserSimpleView = ({ id, firstName, lastName, secondName, role }) => {
-  const textStyle = {
-    marginRight: '4px'
-  }
+const UserSimpleView = ({
+  id,
+  firstName,
+  lastName,
+  role,
+  group,
+  birthDate
+}) => {
   return (
     <Link to={'/users/' + id}>
-      <Button style={{ width: '100%' }}>
-        <Row>
-          <Col>
-            <h3 style={textStyle}>{lastName}</h3>
-          </Col>
-          <Col>
-            <h3 style={textStyle}>{firstName} </h3>
-          </Col>
-          <Col>
-            <h3 style={textStyle}>{secondName}</h3>
-          </Col>
-          <Col>
-            <h3 style={textStyle}>{role}</h3>
-          </Col>
-        </Row>
-      </Button>
+      <Row>
+        <Col>
+          <Text>
+            {firstName} {lastName}
+          </Text>
+        </Col>
+        <Col>
+          <Text>{role}</Text>
+        </Col>
+        <Col>
+          <Text>{group}</Text>
+        </Col>
+        <Col>
+          <Text>{birthDate}</Text>
+        </Col>
+      </Row>
     </Link>
   )
 }
