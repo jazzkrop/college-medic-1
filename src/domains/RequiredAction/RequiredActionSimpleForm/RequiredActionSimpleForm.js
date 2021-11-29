@@ -1,80 +1,57 @@
 import React from 'react'
 import { Form, Input, Button, Select, DatePicker, Col, Row, Space } from 'antd'
 
-
-const RequiredActionSimpleForm = ({id}) => {
+const RequiredActionSimpleForm = ({ id }) => {
+  const { TextArea } = Input
   return (
     <Form layout="horizontal">
       <Row>
-        <Col>
-          <Space size={'large'}>
-            <Form.Item name="lastName" label="First name">
-              <Input placeholder="Enter your last name" />
-            </Form.Item>
-            <Form.Item name="firstName" label="First name">
-              <Input placeholder="Enter your first name" />
-            </Form.Item>
-            <Form.Item name="secondName" label="Second name">
-              <Input placeholder="Enter your second name" />
-            </Form.Item>
-          </Space>
+        <Col span={6}>
+          <Row>
+            <Col span={24}>
+              <Form.Item name="attendeesMinYear" label="Min year">
+                {/* TODO */}
+                {/* find beter way to set width */}
+                <DatePicker style={{ width: '90%' }} picker="year" />
+              </Form.Item>
+            </Col>
+          </Row>
+          <Row>
+            <Col span={23}>
+              <Form.Item name="attendeesRole" label="Role">
+                <Select placeholder="Select role">
+                  <Select.Option value="student">Student</Select.Option>
+                  <Select.Option value="curator">Curator</Select.Option>
+                </Select>
+              </Form.Item>
+            </Col>
+          </Row>
+          <Row>
+            <Col span={23}>
+              <Form.Item name="attendeesGender" label="Gender">
+                <Select placeholder="Select gender">
+                  <Select.Option value="male">Male</Select.Option>
+                  <Select.Option value="female">Female</Select.Option>
+                </Select>
+              </Form.Item>
+            </Col>
+          </Row>
         </Col>
-      </Row>
-      <Row>
-        <Col>
-          <Space size={'large'}>
-            <Form.Item label="Birth Date">
-              <DatePicker />
-            </Form.Item>
-            <Form.Item name="group" label="Group">
-              <Select placeholder="your group">
-                <Select.Option value="group 1">group 1</Select.Option>
-                <Select.Option value="group 2">group 2</Select.Option>
-              </Select>
-            </Form.Item>
-            <Form.Item name="role" label="Role">
-              <Select placeholder="your role">
-                <Select.Option value="student">Student</Select.Option>
-                <Select.Option value="nurse">Nurse</Select.Option>
-                <Select.Option value="curator">Curator</Select.Option>
-              </Select>
-            </Form.Item>
-            <Form.Item name="gender" label="Gender">
-              <Select placeholder="your gender">
-                <Select.Option value="student">Student</Select.Option>
-                <Select.Option value="nurse">Nurse</Select.Option>
-                <Select.Option value="curator">Curator</Select.Option>
-              </Select>
-            </Form.Item>
-          </Space>
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          <Space size={'large'}>
-            <Form.Item name="course" label="Course">
-              <Select placeholder="your course">
-                <Select.Option value="1">1</Select.Option>
-                <Select.Option value="2">2</Select.Option>
-                <Select.Option value="3">3</Select.Option>
-                <Select.Option value="4">4</Select.Option>
-              </Select>
-            </Form.Item>
-            <Form.Item name="fieldOfStudy" label="Field of study">
-              <Select placeholder="field of study">
-                <Select.Option value="softwareEngineering">
-                  Software engineering
-                </Select.Option>
-                <Select.Option value="roadTransport">
-                  Road transport
-                </Select.Option>
-                <Select.Option value="computerEngineering">
-                  Computer Engineering
-                </Select.Option>
-                <Select.Option value="economics">Economics</Select.Option>
-              </Select>
-            </Form.Item>
-          </Space>
+        <Col span={18}>
+          <Row>
+            <Col span={14}>
+              <Form.Item name="title" label="Title">
+                <Input placeholder="Enter title" />
+              </Form.Item>
+            </Col>
+          </Row>
+          <Row>
+            <Col span={14}>
+              <Form.Item name="details" label="Details">
+                <TextArea rows={6} placeholder="Enter details" />
+              </Form.Item>
+            </Col>
+          </Row>
         </Col>
       </Row>
       <Form.Item>
@@ -84,4 +61,5 @@ const RequiredActionSimpleForm = ({id}) => {
       </Form.Item>
     </Form>
   )
+}
 export default RequiredActionSimpleForm
