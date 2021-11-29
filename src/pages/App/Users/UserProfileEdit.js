@@ -1,23 +1,19 @@
-import { Row, Button, Col } from 'antd'
+import { Col } from 'antd'
+import { Row } from '@qonsoll/react-design'
 import { UserSimpleForm } from 'domains/User'
+import { useParams } from 'react-router'
 
 const UserProfileEdit = (props) => {
-  const goBack = () => {
-    // go back
-  }
+  const { id } = useParams()
   return (
-    <div>
-      <Row>
-        <Col span={6}>
-          <Button onClick={goBack}>Go back</Button>
-        </Col>
-        <Col span={18}>
+    <>
+      <Row mb={16} mt={12}>
+        <Col>
           <h1>User Profile Edit</h1>
         </Col>
       </Row>
-
-      <UserSimpleForm />
-    </div>
+      <UserSimpleForm id={id} />
+    </>
   )
 }
 export default UserProfileEdit

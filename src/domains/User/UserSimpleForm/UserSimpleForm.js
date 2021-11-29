@@ -1,23 +1,13 @@
-import React, { useState } from 'react'
-import {
-  Form,
-  Input,
-  Button,
-  Radio,
-  Select,
-  Cascader,
-  DatePicker,
-  InputNumber,
-  TreeSelect,
-  Switch,
-  Row,
-  Col,
-  Space
-} from 'antd'
+import React from 'react'
+import { Form, Input, Button, Select, DatePicker, Col, Row, Space } from 'antd'
 
-const UserSimpleForm = () => {
+const onFinish = (values) => {
+  console.log(values)
+}
+
+const UserSimpleForm = ({ id }) => {
   return (
-    <Form layout="horizontal">
+    <Form layout="horizontal" onFinish={onFinish}>
       <Row>
         <Col>
           <Space size={'large'}>
@@ -36,7 +26,7 @@ const UserSimpleForm = () => {
       <Row>
         <Col>
           <Space size={'large'}>
-            <Form.Item label="Birth Date">
+            <Form.Item name="birthDate" label="Birth Date">
               <DatePicker />
             </Form.Item>
             <Form.Item name="group" label="Group">
@@ -45,18 +35,10 @@ const UserSimpleForm = () => {
                 <Select.Option value="group 2">group 2</Select.Option>
               </Select>
             </Form.Item>
-            <Form.Item name="role" label="Role">
-              <Select placeholder="your role">
-                <Select.Option value="student">Student</Select.Option>
-                <Select.Option value="nurse">Nurse</Select.Option>
-                <Select.Option value="curator">Curator</Select.Option>
-              </Select>
-            </Form.Item>
             <Form.Item name="gender" label="Gender">
               <Select placeholder="your gender">
-                <Select.Option value="student">Student</Select.Option>
-                <Select.Option value="nurse">Nurse</Select.Option>
-                <Select.Option value="curator">Curator</Select.Option>
+                <Select.Option value="male">Male</Select.Option>
+                <Select.Option value="female">Female</Select.Option>
               </Select>
             </Form.Item>
           </Space>
@@ -65,6 +47,13 @@ const UserSimpleForm = () => {
       <Row>
         <Col>
           <Space size={'large'}>
+            <Form.Item name="role" label="Role">
+              <Select placeholder="your role">
+                <Select.Option value="student">Student</Select.Option>
+                <Select.Option value="nurse">Nurse</Select.Option>
+                <Select.Option value="curator">Curator</Select.Option>
+              </Select>
+            </Form.Item>
             <Form.Item name="course" label="Course">
               <Select placeholder="your course">
                 <Select.Option value="1">1</Select.Option>
