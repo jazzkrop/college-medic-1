@@ -1,14 +1,14 @@
-import { getAuth, GoogleAuthProvider, signInWithPopup } from "@firebase/auth";
-import { doc, getDoc, getFirestore, setDoc } from "@firebase/firestore";
-import { useNavigate } from 'react-router-dom'
-import app from "services";
+import { getAuth, GoogleAuthProvider, signInWithPopup } from '@firebase/auth'
+import { doc, getDoc, getFirestore, setDoc } from '@firebase/firestore'
+import { useHistory } from 'react-router-dom'
+import { app } from 'services/firebase'
 
 const auth = getAuth(app)
 const provider = new GoogleAuthProvider()
 const db = getFirestore(app)
 
 const Login = (props) => {
-  const navigate = useNavigate()
+  const history = useHistory()
 
   const login = async () => {
     const result = await signInWithPopup(auth, provider)
@@ -21,9 +21,9 @@ const Login = (props) => {
         firstName: user.displayName || null,
         avatarUrl: user.photoURL || null
       })
-      navigate(`/users/${user.uid}/edit`)
+      history.push(`/users/${user.uid}/edit`)
     }
-      navigate(`/users/${user.uid}/edit`)
+    history.push(`/users/${user.uid}/edit`)
   }
 
   return (
