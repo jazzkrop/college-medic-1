@@ -1,0 +1,6 @@
+import { defaul as Login } from './Login'
+import { defaul as RequiredActionsAll } from './RequiredActionsAll'
+import { defaul as RequiredActionsCreate } from './RequiredActionsCreate'
+import { defaul as StudentsAll } from './StudentsAll'
+import { defaul as UserCreate } from './UserCreate'
+import { defaul as UserProfile } from './UserProfile'
