@@ -1,4 +1,10 @@
+import { PageWrapper } from '@qonsoll/react-design'
+
 const RequiredActionsCreate = (props) => {
-  return <div>RequiredActionsCreate</div>
+  return (
+    <PageWrapper headingProps={{ title: 'Create required action' }}>
+      content
+    </PageWrapper>
+  )
 }
 export default RequiredActionsCreate
