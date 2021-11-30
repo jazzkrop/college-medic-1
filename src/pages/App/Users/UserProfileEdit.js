@@ -1,7 +1,7 @@
 import { Col } from 'antd'
 import { Row } from '@qonsoll/react-design'
 import { UserSimpleForm } from 'domains/User'
-import { useParams } from 'react-router'
+import { useParams } from 'react-router-dom'
 
 const UserProfileEdit = (props) => {
   const { id } = useParams()
