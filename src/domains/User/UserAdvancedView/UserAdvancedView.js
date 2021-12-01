@@ -7,76 +7,31 @@ import {
   Text,
   Avatar
 } from '@qonsoll/react-design'
+import { doc } from 'firebase/firestore'
+import { useDocumentData } from 'react-firebase-hooks/firestore'
+import { firestore } from 'services/firebase'
 
 const UserAdvancedView = ({ id }) => {
-  const users = [
-    {
-      id: '1',
-      firstName: 'Danil',
-      lastName: 'Sheremeta',
-      group: 'PI-182',
-      birthDate: '2003-07-28',
-      role: 'student'
-    },
-    {
-      id: '2',
-      firstName: 'Ivan',
-      lastName: 'Petro',
-      group: 'PI-182',
-      birthDate: '2002-07-28',
-      role: 'student'
-    },
-    {
-      id: '3',
-      firstName: 'Iryna',
-      lastName: 'Gutnik',
-      group: 'PI-182',
-      birthDate: '1979-03-23',
-      role: 'curator'
-    }
-  ]
-  const {
-    firstName,
-    lastName,
-    group,
-    birthDate,
-    role,
-    secondName,
-    gender,
-    course,
-    fieldOfStudy
-  } = {
-    id: '2',
-    firstName: 'Ivan',
-    lastName: 'Petro',
-    secondName: 'Petrovich',
-    group: 'PI-182',
-    birthDate: '2002-07-28',
-    role: 'student',
-    gender: 'male',
-    course: '4',
-    fieldOfStudy: 'Computer science'
-  }
+  const [user, loading, error] = useDocumentData(doc(firestore, 'users', id), {
+    snapshotListenOptions: { includeMetadataChanges: true }
+  })
   return (
     <Container>
       <Row mb={3}>
         <Col cw={[12, 12, 'auto']}>
-          <Avatar
-            size="large"
-            src="https://lh3.googleusercontent.com/a/AATXAJyY-8otzV6IOUAznaEPt_qsSEZs0Npf7QY-Sbxq=s96-c"
-          ></Avatar>
+          <Avatar size="large" src={user?.avatarUrl}></Avatar>
         </Col>
         <Col>
           <Row>
             <Col>
               <Title level={2}>
-                {firstName} {lastName} {secondName}
+                {user?.firstName} {user?.lastName} {user?.secondName}
               </Title>
             </Col>
           </Row>
           <Row>
             <Col>
-              <Title level={5}>{role}</Title>
+              <Title level={5}>{user?.role}</Title>
             </Col>
           </Row>
         </Col>
@@ -100,7 +55,7 @@ const UserAdvancedView = ({ id }) => {
                   <Text>First name:</Text>
                 </Col>
                 <Col>
-                  <Text>{firstName}</Text>
+                  <Text>{user?.firstName}</Text>
                 </Col>
               </Row>
               <Row>
@@ -108,7 +63,7 @@ const UserAdvancedView = ({ id }) => {
                   <Text>Second name:</Text>
                 </Col>
                 <Col>
-                  <Text>{secondName}</Text>
+                  <Text>{user?.secondName}</Text>
                 </Col>
               </Row>
               <Row>
@@ -116,7 +71,7 @@ const UserAdvancedView = ({ id }) => {
                   <Text>Last name:</Text>
                 </Col>
                 <Col>
-                  <Text>{lastName}</Text>
+                  <Text>{user?.lastName}</Text>
                 </Col>
               </Row>
               <Row>
@@ -124,7 +79,7 @@ const UserAdvancedView = ({ id }) => {
                   <Text>Role:</Text>
                 </Col>
                 <Col>
-                  <Text>{role}</Text>
+                  <Text>{user?.role}</Text>
                 </Col>
               </Row>
             </Col>
@@ -141,7 +96,7 @@ const UserAdvancedView = ({ id }) => {
                   <Text>Birth date:</Text>
                 </Col>
                 <Col>
-                  <Text>{birthDate}</Text>
+                  <Text>{user?.birthDate}</Text>
                 </Col>
               </Row>
               <Row>
@@ -149,7 +104,7 @@ const UserAdvancedView = ({ id }) => {
                   <Text>Gender:</Text>
                 </Col>
                 <Col>
-                  <Text>{gender}</Text>
+                  <Text>{user?.gender}</Text>
                 </Col>
               </Row>
             </Col>
@@ -161,33 +116,33 @@ const UserAdvancedView = ({ id }) => {
           </Row>
           <Row>
             <Col cw={[12, 12, 6]}>
-              {course ? (
+              {user?.course ? (
                 <Row>
                   <Col>
                     <Text>Course:</Text>
                   </Col>
                   <Col>
-                    <Text>{course}</Text>
+                    <Text>{user?.course}</Text>
                   </Col>
                 </Row>
               ) : null}
-              {group ? (
+              {user?.group ? (
                 <Row>
                   <Col>
                     <Text>Group:</Text>
                   </Col>
                   <Col>
-                    <Text>{group}</Text>
+                    <Text>{user?.group}</Text>
                   </Col>
                 </Row>
               ) : null}
-              {fieldOfStudy ? (
+              {user?.fieldOfStudy ? (
                 <Row>
                   <Col>
                     <Text>Field of study:</Text>
                   </Col>
                   <Col>
-                    <Text>{fieldOfStudy}</Text>
+                    <Text>{user?.fieldOfStudy}</Text>
                   </Col>
                 </Row>
               ) : null}

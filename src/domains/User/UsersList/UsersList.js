@@ -1,33 +1,23 @@
-import { Col, Container, Divider, Row, Title } from '@qonsoll/react-design'
+import {
+  Col,
+  Container,
+  Divider,
+  HeadingPrimary,
+  Row,
+  Title
+} from '@qonsoll/react-design'
 import { UserSimpleView } from 'domains/User'
+import { collection } from 'firebase/firestore'
+import { useCollectionData } from 'react-firebase-hooks/firestore'
+import { firestore } from 'services/firebase'
 
 const UsersList = (props) => {
-  const users = [
+  const [value, loading, error] = useCollectionData(
+    collection(firestore, 'users'),
     {
-      id: 'fewbiufewibu',
-      firstName: 'Danil',
-      lastName: 'Sheremeta',
-      group: 'PI-182',
-      birthDate: '2003-07-28',
-      role: 'student'
-    },
-    {
-      id: 'ksdjhbvshSDv',
-      firstName: 'Ivan',
-      lastName: 'Petro',
-      group: 'PI-182',
-      birthDate: '2002-07-28',
-      role: 'student'
-    },
-    {
-      id: 'sdvkjvdsjvdssdvjh',
-      firstName: 'Iryna',
-      lastName: 'Gutnik',
-      group: 'PI-182',
-      birthDate: '1979-03-23',
-      role: 'curator'
+      snapshotListenOptions: { includeMetadataChanges: true }
     }
-  ]
+  )
   return (
     <Container>
       <Row mb={2}>
@@ -45,13 +35,19 @@ const UsersList = (props) => {
         </Col>
       </Row>
       <Divider mb={1} />
-      {users.map((user) => {
-        return (
-          <>
-            <UserSimpleView {...user} /> <Divider mb={1} />
-          </>
-        )
-      })}
+      {error && <HeadingPrimary>Error: {JSON.stringify(error)}</HeadingPrimary>}
+      {loading && <Title>Collection: Loading...</Title>}
+      {value && (
+        <>
+          {value?.map((user) => {
+            return (
+              <>
+                <UserSimpleView user={user} /> <Divider mb={1} />
+              </>
+            )
+          })}
+        </>
+      )}
     </Container>
   )
 }

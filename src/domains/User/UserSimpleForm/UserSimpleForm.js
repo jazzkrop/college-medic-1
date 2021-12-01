@@ -8,14 +8,30 @@ import {
   // Select,
   Title
 } from '@qonsoll/react-design'
-
-const onFinish = (values) => {
-  console.log(values)
-}
+import { firestore } from 'services/firebase'
+import { doc, setDoc } from 'firebase/firestore'
+import { useDocumentDataOnce } from 'react-firebase-hooks/firestore'
 
 const UserSimpleForm = ({ id }) => {
+  const [initialValues, loading, error] = useDocumentDataOnce(
+    doc(firestore, 'users', id),
+    {
+      snapshotListenOptions: { includeMetadataChanges: true }
+    }
+  )
+  console.log('initial ->', initialValues)
+  const onFinish = (values) => {
+    const birthDate = values.birthDate._d
+    delete values.birthDate
+    console.log(values)
+    setDoc(doc(firestore, 'users', id), {
+      ...values,
+      birthDate
+    })
+  }
+
   return (
-    <Form layout="vertical">
+    <Form layout="vertical" initialValues={initialValues} onFinish={onFinish}>
       <Container>
         <Row mb={3}>
           <Col>
@@ -24,7 +40,7 @@ const UserSimpleForm = ({ id }) => {
         </Row>
         <Row>
           <Col>
-            <Form.Item name="lastName" label="First name">
+            <Form.Item name="lastName" label="Last name">
               <Input placeholder="Enter your last name" />
             </Form.Item>
           </Col>

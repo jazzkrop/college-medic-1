@@ -1,30 +1,23 @@
 import { Link } from 'react-router-dom'
 import { Col, Row, Text } from '@qonsoll/react-design'
 
-const UserSimpleView = ({
-  id,
-  firstName,
-  lastName,
-  role,
-  group,
-  birthDate
-}) => {
+const UserSimpleView = ({ user }) => {
   return (
-    <Link to={'/users/' + id}>
+    <Link to={'/users/' + user.id}>
       <Row>
         <Col>
           <Text>
-            {firstName} {lastName}
+            {user.firstName} {user.lastName}
           </Text>
         </Col>
         <Col>
-          <Text>{role}</Text>
+          <Text>{user.role}</Text>
         </Col>
         <Col>
-          <Text>{group}</Text>
+          <Text>{user.group}</Text>
         </Col>
         <Col>
-          <Text>{birthDate}</Text>
+          <Text>{user.birthDate}</Text>
         </Col>
       </Row>
     </Link>
