@@ -22,7 +22,7 @@ import {
 } from 'firebase/firestore'
 import {
   useDocumentDataOnce,
-  useCollectionData
+  useCollectionDataOnce
 } from 'react-firebase-hooks/firestore'
 import { useHistory } from 'react-router-dom'
 
@@ -32,16 +32,12 @@ const GroupSimpleForm = ({ id }) => {
   const recordId = id || newId
   const history = useHistory()
 
-  const getCurators = async () => {
-    const curatorsQuery = query(
-      collection(firestore, 'users'),
-      where('role', '==', 'curator')
-    )
-    const curators = getDocs(curatorsQuery) || []
-    return curators
-  }
-  const curators = getCurators()
-  console.log('curators ->', curators)
+  const [values, loading, error] = useCollectionDataOnce(
+    query(collection(firestore, 'users'), where('role', '==', 'curator')),
+    {}
+  )
+
+  console.log('YOUR CURATORS ->', values)
 
   const [initialValues] = useDocumentDataOnce(
     doc(firestore, 'groups', recordId),
