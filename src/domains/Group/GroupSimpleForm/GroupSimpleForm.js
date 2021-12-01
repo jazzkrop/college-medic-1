@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Form, Select, DatePicker } from 'antd'
 import {
   Container,
@@ -7,8 +7,7 @@ import {
   Input,
   Button,
   // Select,
-  Title,
-  TextArea
+  Title
 } from '@qonsoll/react-design'
 import { firestore } from 'services/firebase'
 import {
@@ -16,7 +15,6 @@ import {
   updateDoc,
   collection,
   setDoc,
-  getDocs,
   query,
   where
 } from 'firebase/firestore'
@@ -32,21 +30,16 @@ const GroupSimpleForm = ({ id }) => {
   const recordId = id || newId
   const history = useHistory()
 
-  const [values, loading, error] = useCollectionDataOnce(
+  const [curators, loading, error] = useCollectionDataOnce(
     query(collection(firestore, 'users'), where('role', '==', 'curator')),
     {}
   )
 
-  console.log('YOUR CURATORS ->', values)
+  const [group] = useDocumentDataOnce(doc(firestore, 'groups', recordId), {
+    snapshotListenOptions: { includeMetadataChanges: true }
+  })
 
-  const [initialValues] = useDocumentDataOnce(
-    doc(firestore, 'groups', recordId),
-    {
-      snapshotListenOptions: { includeMetadataChanges: true }
-    }
-  )
-
-  console.log('initial ->', initialValues)
+  const [form] = Form.useForm()
 
   const onFinish = (values) => {
     Object.keys(values).forEach((key) =>
@@ -55,16 +48,19 @@ const GroupSimpleForm = ({ id }) => {
     id
       ? updateDoc(doc(firestore, 'groups', recordId), {
           ...values,
-          recordId
+          id: recordId
         })
       : setDoc(doc(firestore, 'groups', recordId), {
           ...values,
-          recordId
+          id: recordId
         })
     history.push('/groups')
   }
+  useEffect(() => {
+    group && form.setFieldsValue(group)
+  }, [form, group])
   return (
-    <Form layout="vertical" initialValues={initialValues} onFinish={onFinish}>
+    <Form layout="vertical" form={form} onFinish={onFinish}>
       <Container>
         <Row mb={3}>
           <Col>
@@ -82,21 +78,14 @@ const GroupSimpleForm = ({ id }) => {
           <Col>
             <Form.Item name="curator" label="Curator">
               <Select placeholder="Select curator">
-                <Select.Option value="ID_OF_CURATOR_1">
-                  Name of curator 1
-                </Select.Option>
-
-                <Select.Option value="ID_OF_CURATOR_2">
-                  Name of curator 2
-                </Select.Option>
-
-                <Select.Option value="ID_OF_CURATOR_3">
-                  Name of curator 3
-                </Select.Option>
-
-                <Select.Option value="ID_OF_CURATOR_4">
-                  Name of curator 4
-                </Select.Option>
+                {curators?.map((curator) => {
+                  return (
+                    <Select.Option value={curator.id}>
+                      {curator.lastName} {curator.firstName}{' '}
+                      {curator.secondName}
+                    </Select.Option>
+                  )
+                })}
               </Select>
             </Form.Item>
           </Col>

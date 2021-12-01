@@ -1,3 +1,4 @@
+import React, { useEffect } from 'react'
 import { Form, DatePicker, Select } from 'antd'
 import {
   Container,
@@ -9,30 +10,48 @@ import {
   Title
 } from '@qonsoll/react-design'
 import { firestore } from 'services/firebase'
-import { doc, updateDoc } from 'firebase/firestore'
+import { doc, updateDoc, setDoc, collection } from 'firebase/firestore'
 import { useDocumentDataOnce } from 'react-firebase-hooks/firestore'
 import { useHistory } from 'react-router-dom'
+import moment from 'moment'
+
+const newId = doc(collection(firestore, 'users')).id
 
 const UserSimpleForm = ({ id }) => {
+  const recordId = id || newId
   const history = useHistory()
-  const [initialValues, loading, error] = useDocumentDataOnce(
-    doc(firestore, 'users', id),
+  const [user, loading, error] = useDocumentDataOnce(
+    doc(firestore, 'users', recordId),
     {
       snapshotListenOptions: { includeMetadataChanges: true }
     }
   )
-  console.log('initial ->', initialValues)
+  const [form] = Form.useForm()
+
   const onFinish = (values) => {
+    Object.keys(values).forEach((key) =>
+      values[key] === undefined ? delete values[key] : {}
+    )
     values.birthDate ? (values.birthDate = values?.birthDate._d) : (values = {})
-    updateDoc(doc(firestore, 'users', id), {
-      ...values,
-      id
-    })
+
+    id
+      ? updateDoc(doc(firestore, 'users', recordId), {
+          ...values,
+          id: recordId
+        })
+      : setDoc(doc(firestore, 'users', recordId), {
+          ...values,
+          id: recordId
+        })
     history.push('/users')
   }
+  useEffect(() => {
+    if (user) user.birthDate = moment(new Date(user.birthDate?.seconds * 1000))
+    user && form.setFieldsValue(user)
+  }, [form, user])
 
   return (
-    <Form layout="vertical" initialValues={initialValues} onFinish={onFinish}>
+    <Form layout="vertical" form={form} onFinish={onFinish}>
       <Container>
         <Row mb={3}>
           <Col>
@@ -129,6 +148,16 @@ const UserSimpleForm = ({ id }) => {
           </Col>
         </Row>
         <Row h="right">
+          <Col cw="auto">
+            <Button
+              type="dashed"
+              onClick={() => {
+                console.log('akjhbgkjasdhbvaksej')
+              }}
+            >
+              Cancel
+            </Button>
+          </Col>
           <Col cw="auto">
             <Form.Item>
               <Button type="primary" htmlType="submit">
