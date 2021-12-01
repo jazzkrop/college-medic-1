@@ -10,10 +10,65 @@ import {
   Title,
   TextArea
 } from '@qonsoll/react-design'
+import { firestore } from 'services/firebase'
+import {
+  doc,
+  updateDoc,
+  collection,
+  setDoc,
+  getDocs,
+  query,
+  where
+} from 'firebase/firestore'
+import {
+  useDocumentDataOnce,
+  useCollectionData
+} from 'react-firebase-hooks/firestore'
+import { useHistory } from 'react-router-dom'
 
-const GroupSimpleForm = (props) => {
+const newId = doc(collection(firestore, 'groups')).id
+
+const GroupSimpleForm = ({ id }) => {
+  const recordId = id || newId
+  const history = useHistory()
+
+  const getCurators = async () => {
+    const curatorsQuery = query(
+      collection(firestore, 'users'),
+      where('role', '==', 'curator')
+    )
+    const curators = getDocs(curatorsQuery) || []
+    return curators
+  }
+  const curators = getCurators()
+  console.log('curators ->', curators)
+
+  const [initialValues] = useDocumentDataOnce(
+    doc(firestore, 'groups', recordId),
+    {
+      snapshotListenOptions: { includeMetadataChanges: true }
+    }
+  )
+
+  console.log('initial ->', initialValues)
+
+  const onFinish = (values) => {
+    Object.keys(values).forEach((key) =>
+      values[key] === undefined ? delete values[key] : {}
+    )
+    id
+      ? updateDoc(doc(firestore, 'groups', recordId), {
+          ...values,
+          recordId
+        })
+      : setDoc(doc(firestore, 'groups', recordId), {
+          ...values,
+          recordId
+        })
+    history.push('/groups')
+  }
   return (
-    <Form layout="vertical">
+    <Form layout="vertical" initialValues={initialValues} onFinish={onFinish}>
       <Container>
         <Row mb={3}>
           <Col>

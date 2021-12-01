@@ -9,10 +9,12 @@ import {
   Title
 } from '@qonsoll/react-design'
 import { firestore } from 'services/firebase'
-import { doc, setDoc } from 'firebase/firestore'
+import { doc, updateDoc } from 'firebase/firestore'
 import { useDocumentDataOnce } from 'react-firebase-hooks/firestore'
+import { useHistory } from 'react-router-dom'
 
 const UserSimpleForm = ({ id }) => {
+  const history = useHistory()
   const [initialValues, loading, error] = useDocumentDataOnce(
     doc(firestore, 'users', id),
     {
@@ -21,13 +23,12 @@ const UserSimpleForm = ({ id }) => {
   )
   console.log('initial ->', initialValues)
   const onFinish = (values) => {
-    const birthDate = values.birthDate._d
-    delete values.birthDate
-    console.log(values)
-    setDoc(doc(firestore, 'users', id), {
+    values.birthDate ? (values.birthDate = values?.birthDate._d) : (values = {})
+    updateDoc(doc(firestore, 'users', id), {
       ...values,
-      birthDate
+      id
     })
+    history.push('/users')
   }
 
   return (
@@ -80,8 +81,8 @@ const UserSimpleForm = ({ id }) => {
           <Col>
             <Form.Item name="gender" label="Gender">
               <Select placeholder="Choose your gender">
-                <Select.Option value="student">Male</Select.Option>
-                <Select.Option value="nurse">Female</Select.Option>
+                <Select.Option value="male">Male</Select.Option>
+                <Select.Option value="female">Female</Select.Option>
               </Select>
             </Form.Item>
           </Col>

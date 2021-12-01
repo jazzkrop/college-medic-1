@@ -2,6 +2,27 @@ import { Link } from 'react-router-dom'
 import { Col, Row, Text } from '@qonsoll/react-design'
 
 const UserSimpleView = ({ user }) => {
+  const birthDate = new Date(user.birthDate?.seconds * 1000)
+  var months = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec'
+  ]
+  let birthDateDisplay = `${birthDate.getDate()} ${
+    months[birthDate.getMonth()]
+  } ${birthDate.getFullYear()}`
+  if (birthDateDisplay.includes('NaN')) {
+    birthDateDisplay = ''
+  }
   return (
     <Link to={'/users/' + user.id}>
       <Row>
@@ -17,7 +38,7 @@ const UserSimpleView = ({ user }) => {
           <Text>{user.group}</Text>
         </Col>
         <Col>
-          <Text>{user.birthDate}</Text>
+          <Text>{birthDateDisplay}</Text>
         </Col>
       </Row>
     </Link>

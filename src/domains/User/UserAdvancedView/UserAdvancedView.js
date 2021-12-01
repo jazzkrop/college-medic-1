@@ -15,6 +15,28 @@ const UserAdvancedView = ({ id }) => {
   const [user, loading, error] = useDocumentData(doc(firestore, 'users', id), {
     snapshotListenOptions: { includeMetadataChanges: true }
   })
+
+  const birthDate = new Date(user?.birthDate?.seconds * 1000)
+  var months = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec'
+  ]
+  let birthDateDisplay = `${birthDate.getDate()} ${
+    months[birthDate.getMonth()]
+  } ${birthDate.getFullYear()}`
+  if (birthDateDisplay.includes('NaN')) {
+    birthDateDisplay = ''
+  }
   return (
     <Container>
       <Row mb={3}>
@@ -25,7 +47,7 @@ const UserAdvancedView = ({ id }) => {
           <Row>
             <Col>
               <Title level={2}>
-                {user?.firstName} {user?.lastName} {user?.secondName}
+                {user?.lastName} {user?.firstName} {user?.secondName}
               </Title>
             </Col>
           </Row>
@@ -96,7 +118,7 @@ const UserAdvancedView = ({ id }) => {
                   <Text>Birth date:</Text>
                 </Col>
                 <Col>
-                  <Text>{user?.birthDate}</Text>
+                  <Text>{birthDateDisplay}</Text>
                 </Col>
               </Row>
               <Row>
