@@ -87,7 +87,6 @@ const UsersList = ({ requiredActionId }) => {
       {users && (
         <>
           {users?.map((user) => {
-            console.log('user req ->', user)
             return (
               <>
                 <UserSimpleView

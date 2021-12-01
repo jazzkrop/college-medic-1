@@ -88,7 +88,6 @@ const routes = [
 
 const App = () => {
   const [user, loading, error] = useAuthState(auth)
-  console.log('user ->', user)
   return (
     // Layout should be here
     <LayoutSystemProvider isAsideLeft>
