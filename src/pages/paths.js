@@ -17,6 +17,8 @@ const PATHS = {
     USER_PROFILE: '/users/:id',
     USER_PROFILE_EDIT: '/users/:id/edit',
     REQUIRED_ACTIONS_ALL: '/required-actions',
+    REQUIRED_ACTION: '/required-actions/:id',
+    REQUIRED_ACTION_EDIT: '/required-actions/:id/edit',
     REQUIRED_ACTIONS_CREATE: '/required-action/create',
     GROUPS_ALL: '/groups',
     GROUP_CREATE: '/group/create',

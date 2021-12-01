@@ -1,7 +1,12 @@
 import { Switch, Route, Redirect } from 'react-router-dom'
 import { UsersAll, UserCreate, UserProfile, UserProfileEdit } from './Users'
 import { GroupsAll, GroupCreate, GroupEdit } from './Groups'
-import { RequiredActionsAll, RequiredActionsCreate } from './RequiredActions'
+import {
+  RequiredActionsAll,
+  RequiredActionsCreate,
+  RequiredAction,
+  RequiredActionsEdit
+} from './RequiredActions'
 import PATHS from '../paths'
 import { LayoutSystemProvider, Layout } from '@qonsoll/react-design'
 import { AccountMenu, LayoutAside, Logo, MainMenu } from 'components'
@@ -15,6 +20,8 @@ const {
   USER_PROFILE_EDIT,
   REQUIRED_ACTIONS_ALL,
   REQUIRED_ACTIONS_CREATE,
+  REQUIRED_ACTION,
+  REQUIRED_ACTION_EDIT,
   GROUPS_ALL,
   GROUP_CREATE,
   GROUP_EDIT
@@ -39,6 +46,18 @@ const routes = [
     key: 'REQUIRED_ACTIONS_ALL',
     path: REQUIRED_ACTIONS_ALL,
     component: RequiredActionsAll,
+    exact: true
+  },
+  {
+    key: 'REQUIRED_ACTION',
+    path: REQUIRED_ACTION,
+    component: RequiredAction,
+    exact: true
+  },
+  {
+    key: 'REQUIRED_ACTION_EDIT',
+    path: REQUIRED_ACTION_EDIT,
+    component: RequiredActionsEdit,
     exact: true
   },
   {

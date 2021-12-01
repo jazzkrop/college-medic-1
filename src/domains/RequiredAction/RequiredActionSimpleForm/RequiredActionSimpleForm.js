@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Form, Select, DatePicker } from 'antd'
 import {
   Container,
@@ -14,38 +14,48 @@ import { firestore } from 'services/firebase'
 import { doc, updateDoc, collection, setDoc } from 'firebase/firestore'
 import { useDocumentDataOnce } from 'react-firebase-hooks/firestore'
 import { useHistory } from 'react-router-dom'
+import moment from 'moment'
+
 const newId = doc(collection(firestore, 'required-actions')).id
 
 const RequiredActionSimpleForm = ({ id }) => {
   const recordId = id || newId
   const history = useHistory()
-  const [initialValues, loading, error] = useDocumentDataOnce(
+  const [form] = Form.useForm()
+
+  const [requiredActions, loading, error] = useDocumentDataOnce(
     doc(firestore, 'required-actions', recordId),
     {
       snapshotListenOptions: { includeMetadataChanges: true }
     }
   )
-  console.log('initial ->', initialValues)
   const onFinish = (values) => {
     Object.keys(values).forEach((key) =>
       values[key] === undefined ? delete values[key] : {}
     )
-    if (values.minYear) {
-      values.minYear = values?.minYear._d
+    if (values.attendeesMinYear) {
+      values.attendeesMinYear = values?.attendeesMinYear._d
     }
     id
       ? updateDoc(doc(firestore, 'required-actions', recordId), {
           ...values,
-          recordId
+          id: recordId
         })
       : setDoc(doc(firestore, 'required-actions', recordId), {
           ...values,
-          recordId
+          id: recordId
         })
-    history.push('/required-actions')
+    history.push(`/required-actions/${recordId}`)
   }
+  useEffect(() => {
+    if (requiredActions)
+      requiredActions.attendeesMinYear = moment(
+        new Date(requiredActions.attendeesMinYear?.seconds * 1000)
+      )
+    requiredActions && form.setFieldsValue(requiredActions)
+  }, [form, requiredActions])
   return (
-    <Form layout="vertical" initialValues={initialValues} onFinish={onFinish}>
+    <Form layout="vertical" form={form} onFinish={onFinish}>
       <Container>
         <Row mb={3}>
           <Col>

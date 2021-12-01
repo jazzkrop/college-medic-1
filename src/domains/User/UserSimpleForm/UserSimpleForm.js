@@ -15,18 +15,18 @@ import { useDocumentDataOnce } from 'react-firebase-hooks/firestore'
 import { useHistory } from 'react-router-dom'
 import moment from 'moment'
 
-const newId = doc(collection(firestore, 'users')).id
-
 const UserSimpleForm = ({ id }) => {
+  const newId = doc(collection(firestore, 'users')).id
   const recordId = id || newId
   const history = useHistory()
+  const [form] = Form.useForm()
+
   const [user, loading, error] = useDocumentDataOnce(
     doc(firestore, 'users', recordId),
     {
       snapshotListenOptions: { includeMetadataChanges: true }
     }
   )
-  const [form] = Form.useForm()
 
   const onFinish = (values) => {
     Object.keys(values).forEach((key) =>
@@ -152,7 +152,7 @@ const UserSimpleForm = ({ id }) => {
             <Button
               type="dashed"
               onClick={() => {
-                console.log('akjhbgkjasdhbvaksej')
+                history.push('/users')
               }}
             >
               Cancel

@@ -1,8 +1,7 @@
 import { Link } from 'react-router-dom'
 import { Col, Row, Text } from '@qonsoll/react-design'
 
-const RequiredActionSimpleView = ({ id, title, description, attendees }) => {
-  const numberOfAttendees = attendees.length
+const RequiredActionSimpleView = ({ id, title, description }) => {
   return (
     <Link to={'/required-actions/' + id}>
       <Row>
@@ -13,7 +12,7 @@ const RequiredActionSimpleView = ({ id, title, description, attendees }) => {
           <Text>{description}</Text>
         </Col>
         <Col>
-          <Text>{numberOfAttendees}</Text>
+          <Text>coming soon...</Text>
         </Col>
       </Row>
     </Link>

@@ -1,27 +1,23 @@
-import { Col, Container, Divider, Row, Title } from '@qonsoll/react-design'
+import {
+  Col,
+  Container,
+  Divider,
+  Row,
+  Title,
+  HeadingPrimary
+} from '@qonsoll/react-design'
 import { RequiredActionSimpleView } from 'domains/RequiredAction'
+import { collection } from 'firebase/firestore'
+import { useCollectionData } from 'react-firebase-hooks/firestore'
+import { firestore } from 'services/firebase'
 
 const RequiredActionsList = (props) => {
-  const requiredActions = [
+  const [requiredActions, loading, error] = useCollectionData(
+    collection(firestore, 'required-actions'),
     {
-      id: 'fewbiufewibu',
-      title: 'Make flurography',
-      description: 'One day you must to make flurography for your health',
-      attendees: ['1', '2', '3', '4']
-    },
-    {
-      id: 'dsfkjhdgr',
-      title: 'Go to sleep',
-      description: 'One day you must to make a good sleep for your health',
-      attendees: ['1', '3', '4']
-    },
-    {
-      id: 'sdiusdvibys',
-      title: 'Go to army',
-      description: 'Protect your country like a warrior!',
-      attendees: ['3', '4']
+      snapshotListenOptions: { includeMetadataChanges: true }
     }
-  ]
+  )
   return (
     <Container>
       <Row mb={2}>
@@ -36,14 +32,20 @@ const RequiredActionsList = (props) => {
         </Col>
       </Row>
       <Divider mb={1} />
-      {requiredActions.map((requiredAction) => {
-        return (
-          <>
-            <RequiredActionSimpleView {...requiredAction} />
-            <Divider mb={1} />
-          </>
-        )
-      })}
+      {error && <HeadingPrimary>Error: {JSON.stringify(error)}</HeadingPrimary>}
+      {loading && <Title>Collection: Loading...</Title>}
+      {requiredActions && (
+        <>
+          {requiredActions.map((requiredAction) => {
+            return (
+              <>
+                <RequiredActionSimpleView {...requiredAction} />
+                <Divider mb={1} />
+              </>
+            )
+          })}
+        </>
+      )}
     </Container>
   )
 }

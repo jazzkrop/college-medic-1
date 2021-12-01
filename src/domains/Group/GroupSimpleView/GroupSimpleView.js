@@ -5,19 +5,19 @@ const UserSimpleView = ({ id, name, curator, students }) => {
   const numberOfStudents = students.length
 
   return (
-    <Link to={'/groups/' + id}>
-      <Row>
-        <Col>
-          <Text>{name}</Text>
-        </Col>
-        <Col>
-          <Text>{curator}</Text>
-        </Col>
-        <Col>
-          <Text>{numberOfStudents}</Text>
-        </Col>
-      </Row>
-    </Link>
+    // <Link to={'/groups/' + id}>
+    <Row>
+      <Col>
+        <Text>{name}</Text>
+      </Col>
+      <Col>
+        <Text>{curator}</Text>
+      </Col>
+      <Col>
+        <Text>{numberOfStudents}</Text>
+      </Col>
+    </Row>
+    // </Link>
   )
 }
 export default UserSimpleView
