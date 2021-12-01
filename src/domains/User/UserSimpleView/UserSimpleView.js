@@ -1,7 +1,22 @@
 import { Link } from 'react-router-dom'
-import { Col, Row, Text } from '@qonsoll/react-design'
+import { Col, Row, Text, Button } from '@qonsoll/react-design'
+import { updateDoc, doc, arrayUnion, arrayRemove } from '@firebase/firestore'
+import { firestore } from 'services/firebase'
+const UserSimpleView = ({ user, requiredActionId }) => {
+  const asignRequiredAction = (id) => {
+    // if (!user.doneRequiredActions) {
+    //   user.doneRequiredActions = []
+    // }
+    updateDoc(doc(firestore, 'users', user.id), {
+      doneRequiredActions: arrayUnion(id)
+    })
+  }
+  const unasignRequiredAction = (id) => {
+    updateDoc(doc(firestore, 'users', user.id), {
+      doneRequiredActions: arrayRemove(id)
+    })
+  }
 
-const UserSimpleView = ({ user }) => {
   const birthDate = new Date(user.birthDate?.seconds * 1000)
   var months = [
     'Jan',
@@ -40,6 +55,44 @@ const UserSimpleView = ({ user }) => {
         <Col>
           <Text>{birthDateDisplay}</Text>
         </Col>
+        {requiredActionId ? (
+          <Col>
+            {user.doneRequiredActions ? (
+              user.doneRequiredActions.includes(requiredActionId) ? (
+                // TODO
+                // remove button onClick redirect to user profile page
+                <Button
+                  ghost={true}
+                  onClick={() => {
+                    unasignRequiredAction(requiredActionId)
+                  }}
+                >
+                  Unasign
+                </Button>
+              ) : (
+                <Button
+                  onClick={() => {
+                    asignRequiredAction(requiredActionId)
+                  }}
+                  ghost={true}
+                  type="primary"
+                >
+                  Asign
+                </Button>
+              )
+            ) : (
+              <Button
+                onClick={() => {
+                  asignRequiredAction(user.id)
+                }}
+                ghost={true}
+                type="primary"
+              >
+                Asign
+              </Button>
+            )}
+          </Col>
+        ) : null}
       </Row>
     </Link>
   )

@@ -23,7 +23,6 @@ const RequiredAction = () => {
       snapshotListenOptions: { includeMetadataChanges: true }
     }
   )
-  console.log('req ac', requiredAction)
   return (
     <PageWrapper headingProps={{ title: requiredAction?.title }}>
       <Button

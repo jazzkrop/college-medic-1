@@ -34,16 +34,30 @@ const UsersList = ({ requiredActionId }) => {
     })
     if (requiredAction) {
       users = value?.map((item) => {
-        if (
-          requiredAction.attendeesMinYear &&
-          new Date(item.birthDate.seconds * 1000).getFullYear() <=
+        // let addItem = true
+        if (requiredAction.attendeesMinYear) {
+          if (
+            new Date(item.birthDate.seconds * 1000).getFullYear() >
             new Date(
               requiredAction.attendeesMinYear.seconds * 1000
             ).getFullYear()
-        )
-          return item
+          ) {
+            return
+          }
+        }
+        if (requiredAction.attendeesRole) {
+          if (item.role != requiredAction.attendeesRole) {
+            return
+          }
+        }
+        if (requiredAction.attendeesGender) {
+          if (item.role != requiredAction.attendeesGender) {
+            return
+          }
+        }
+        return item
       })
-    }
+    } else users = value
   }
   users = users?.filter(function (item) {
     return item !== undefined
@@ -60,9 +74,12 @@ const UsersList = ({ requiredActionId }) => {
         <Col>
           <Title level={5}>Group</Title>
         </Col>
-        <Col>
-          <Title level={5}>Birth date</Title>
-        </Col>
+        <Col></Col>
+        {requiredActionId ? (
+          <Col>
+            <Title level={5}>Actions</Title>
+          </Col>
+        ) : null}
       </Row>
       <Divider mb={1} />
       {error && <HeadingPrimary>Error: {JSON.stringify(error)}</HeadingPrimary>}
@@ -70,9 +87,14 @@ const UsersList = ({ requiredActionId }) => {
       {users && (
         <>
           {users?.map((user) => {
+            console.log('user req ->', user)
             return (
               <>
-                <UserSimpleView user={user} /> <Divider mb={1} />
+                <UserSimpleView
+                  user={user}
+                  requiredActionId={requiredActionId}
+                />
+                <Divider mb={1} />
               </>
             )
           })}
