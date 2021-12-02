@@ -1,7 +1,7 @@
 const PATHS = {
   CONFIG: {
     DEFAULT: '/auth',
-    AFTER_LOGIN: '/users',
+    AFTER_LOGIN: '/user-dashboard',
     AFTER_LOGOUT: '/auth',
     AFTER_SIGNUP: '/users'
   },
@@ -12,6 +12,7 @@ const PATHS = {
     NOT_FOUND: '/service/404'
   },
   AUTHENTICATED: {
+    USER_DASHBOARD: '/user-dashboard',
     USERS_ALL: '/users',
     USER_CREATE: '/user/create',
     USER_PROFILE: '/users/:id',

@@ -51,7 +51,7 @@ const UsersList = ({ requiredActionId }) => {
           }
         }
         if (requiredAction.attendeesGender) {
-          if (item.role != requiredAction.attendeesGender) {
+          if (item.gender != requiredAction.attendeesGender) {
             return
           }
         }

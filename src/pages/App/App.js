@@ -1,5 +1,11 @@
 import { Switch, Route, Redirect } from 'react-router-dom'
-import { UsersAll, UserCreate, UserProfile, UserProfileEdit } from './Users'
+import {
+  UsersAll,
+  UserCreate,
+  UserProfile,
+  UserProfileEdit,
+  UserDashboard
+} from './Users'
 import { GroupsAll, GroupCreate, GroupEdit } from './Groups'
 import {
   RequiredActionsAll,
@@ -17,6 +23,7 @@ const {
   USERS_ALL,
   USER_CREATE,
   USER_PROFILE,
+  USER_DASHBOARD,
   USER_PROFILE_EDIT,
   REQUIRED_ACTIONS_ALL,
   REQUIRED_ACTIONS_CREATE,
@@ -26,7 +33,20 @@ const {
   GROUP_CREATE,
   GROUP_EDIT
 } = PATHS.AUTHENTICATED
-
+const userRoutes = [
+  {
+    key: 'USER_DASHBOARD',
+    path: USER_DASHBOARD,
+    component: UserDashboard,
+    exact: true
+  },
+  {
+    key: 'USER_PROFILE_EDIT',
+    path: USER_PROFILE_EDIT,
+    component: UserProfileEdit,
+    exact: true
+  }
+]
 const routes = [
   { key: 'USERS_ALL', path: USERS_ALL, component: UsersAll, exact: true },
   { key: 'USER_CREATE', path: USER_CREATE, component: UserCreate, exact: true },
@@ -88,6 +108,8 @@ const routes = [
 
 const App = () => {
   const [user, loading, error] = useAuthState(auth)
+
+  console.log('user -> ', user)
   return (
     // Layout should be here
     <LayoutSystemProvider isAsideLeft>
@@ -108,6 +130,9 @@ const App = () => {
       >
         <Switch>
           {routes.map((routeProps) => (
+            <Route {...routeProps} />
+          ))}
+          {userRoutes.map((routeProps) => (
             <Route {...routeProps} />
           ))}
           <Route>

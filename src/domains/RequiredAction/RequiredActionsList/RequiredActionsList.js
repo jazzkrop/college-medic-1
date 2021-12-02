@@ -27,9 +27,6 @@ const RequiredActionsList = (props) => {
         <Col>
           <Title level={5}>Desciption</Title>
         </Col>
-        <Col>
-          <Title level={5}>Number of attendees</Title>
-        </Col>
       </Row>
       <Divider mb={1} />
       {error && <HeadingPrimary>Error: {JSON.stringify(error)}</HeadingPrimary>}
