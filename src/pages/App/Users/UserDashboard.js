@@ -11,7 +11,6 @@ import {
   Title,
   HeadingPrimary
 } from '@qonsoll/react-design'
-import { UserAdvancedView } from 'domains/User'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import {
   useDocumentData,
@@ -27,6 +26,7 @@ const UserDashboard = () => {
   const [user] = useDocumentData(doc(firestore, 'users', userAuth?.uid), {
     snapshotListenOptions: { includeMetadataChanges: true }
   })
+
   const [requiredActionsSnap, loading, error] = useCollectionData(
     collection(firestore, 'required-actions'),
     {

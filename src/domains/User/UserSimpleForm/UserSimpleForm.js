@@ -46,8 +46,11 @@ const UserSimpleForm = ({ id }) => {
     history.push('/users')
   }
   useEffect(() => {
-    if (user) user.birthDate = moment(new Date(user.birthDate?.seconds * 1000))
-    user && form.setFieldsValue(user)
+    const userCopy = { ...user }
+    if (userCopy) {
+      userCopy.birthDate = moment(new Date(userCopy.birthDate?.seconds * 1000))
+      userCopy && form.setFieldsValue(userCopy)
+    }
   }, [form, user])
 
   return (

@@ -6,54 +6,44 @@ import {
   Col,
   Input,
   Button,
-  // Select,
   Title,
   TextArea
 } from '@qonsoll/react-design'
 import { firestore } from 'services/firebase'
-import { doc, updateDoc, collection, setDoc } from 'firebase/firestore'
+import { doc, collection } from 'firebase/firestore'
 import { useDocumentDataOnce } from 'react-firebase-hooks/firestore'
 import { useHistory } from 'react-router-dom'
 import moment from 'moment'
+import { useCreateRequiredAction } from 'hooks'
 
 const newId = doc(collection(firestore, 'required-actions')).id
 
 const RequiredActionSimpleForm = ({ id }) => {
-  const recordId = id || newId
   const history = useHistory()
+  const recordId = id || newId
   const [form] = Form.useForm()
+  const createRequiredAction = useCreateRequiredAction()
 
-  const [requiredActions, loading, error] = useDocumentDataOnce(
+  const [requiredActions] = useDocumentDataOnce(
     doc(firestore, 'required-actions', recordId),
     {
       snapshotListenOptions: { includeMetadataChanges: true }
     }
   )
   const onFinish = (values) => {
-    Object.keys(values).forEach((key) =>
-      values[key] === undefined ? delete values[key] : {}
-    )
-    if (values.attendeesMinYear) {
-      values.attendeesMinYear = values?.attendeesMinYear._d
-    }
-    id
-      ? updateDoc(doc(firestore, 'required-actions', recordId), {
-          ...values,
-          id: recordId
-        })
-      : setDoc(doc(firestore, 'required-actions', recordId), {
-          ...values,
-          id: recordId
-        })
+    createRequiredAction({ values, recordId, id })
     history.push(`/required-actions/${recordId}`)
   }
+
   useEffect(() => {
-    if (requiredActions)
-      requiredActions.attendeesMinYear = moment(
-        new Date(requiredActions.attendeesMinYear?.seconds * 1000)
+    const requiredActionsCopy = { ...requiredActions }
+    if (requiredActionsCopy)
+      requiredActionsCopy.attendeesMinYear = moment(
+        new Date(requiredActionsCopy.attendeesMinYear?.seconds * 1000)
       )
     requiredActions && form.setFieldsValue(requiredActions)
   }, [form, requiredActions])
+
   return (
     <Form layout="vertical" form={form} onFinish={onFinish}>
       <Container>

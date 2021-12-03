@@ -17,7 +17,7 @@ import { firestore } from 'services/firebase'
 const RequiredAction = () => {
   const history = useHistory()
   const { id } = useParams()
-  const [requiredAction, loading, error] = useDocumentData(
+  const [requiredAction] = useDocumentData(
     doc(firestore, 'required-actions', id),
     {
       snapshotListenOptions: { includeMetadataChanges: true }

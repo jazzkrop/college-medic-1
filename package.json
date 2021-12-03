@@ -13,6 +13,7 @@
     "antd": "^4.17.2",
     "craco-alias": "^3.0.1",
     "firebase": "^9.5.0",
+    "gmail-send": "^1.8.14",
     "lodash": "^4.17.21",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
