@@ -8,11 +8,9 @@ import {
   where,
   getDocs
 } from 'firebase/firestore'
-const send = require('gmail-send')({
-  user: 'jazzkrop@gmail.com',
-  pass: 'jazzDgoogle123qwe',
-  subject: 'New task from college medics'
-})
+import emailjs, { init } from 'emailjs-com'
+
+init('user_rUnZ881JmQk3UfzTSgUW6')
 
 const useCreateRequiredAction = () => {
   const createRequiredAction = async ({ values, recordId, id }) => {
@@ -40,10 +38,27 @@ const useCreateRequiredAction = () => {
     attendees.forEach((doc) => {
       const user = doc.data()
       values.attendees.push(user.id)
-      console.log('email user ->', user)
       if (user.email) {
-        // TODO
-        // send to email
+        console.log('email user ->', user)
+        emailjs.send('service_qmmry3b', 'template_fhx71od', {
+          title: values.title,
+          description: values.description
+        })
+        // emailjs
+        //   .sendForm(
+        //     'service_qmmry3b',
+        //     'template_fhx71od',
+        //     form,
+        //     'user_rUnZ881JmQk3UfzTSgUW6'
+        //   )
+        //   .then(
+        //     (result) => {
+        //       console.log(result.text)
+        //     },
+        //     (error) => {
+        //       console.log(error.text)
+        //     }
+        //   )
       }
     })
 
